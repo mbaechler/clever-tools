@@ -19,6 +19,7 @@ const git = require('../src/models/git.js');
 const Parsers = require('../src/parsers.js');
 const handleCommandPromise = require('../src/command-promise-handler.js');
 const Formatter = require('../src/models/format-string.js');
+const colors = require('colors/safe.js');
 
 // Exit cleanly if the program we pipe to exits abruptly
 process.stdout.on('error', (error) => {
@@ -829,12 +830,12 @@ function run () {
   // peer category - end
 
   const networkGroupsCommand = cliparse.command('networkgroups', {
-    description: 'List Network Group commands',
+    description: `List Network Group commands ${colors.yellow('(alpha feature)')}`,
     options: [opts.orgaIdOrName, opts.alias],
     commands: [networkGroupsListCommand, networkGroupsCreateCommand, networkGroupsDeleteCommand, networkGroupsMembersCategoryCommand, networkGroupsPeersCategoryCommand],
   });
   const ngCommand = cliparse.command('ng', {
-    description: `Alias for ${Formatter.formatCommand('clever networkgroups')}`,
+    description: `Alias for ${Formatter.formatCommand('clever networkgroups')} ${colors.yellow('(alpha feature)')}`,
     options: [opts.orgaIdOrName, opts.alias],
     commands: [networkGroupsListCommand, networkGroupsCreateCommand, networkGroupsDeleteCommand, networkGroupsMembersCategoryCommand, networkGroupsPeersCategoryCommand],
   });
@@ -1059,8 +1060,8 @@ function run () {
       logsCommand,
       makeDefaultCommand,
       // Not ready for stable release yet
-      // networkGroupsCommand,
-      // ngCommand,
+      networkGroupsCommand,
+      ngCommand,
       openCommand,
       consoleCommand,
       profileCommand,
